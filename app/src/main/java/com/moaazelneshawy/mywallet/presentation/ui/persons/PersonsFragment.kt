@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialog
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -42,7 +43,7 @@ import org.jetbrains.anko.support.v4.intentFor
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
-class PersonsFragment : Fragment(), OnPersonActionsListener {
+class PersonsFragment : Fragment(), OnPersonActionsListener, SearchView.OnQueryTextListener {
     private val TAG = PersonsFragment::class.java.simpleName
     private lateinit var binding: FragmentPersonsBinding
     private lateinit var viewModel: MyViewModel
@@ -69,6 +70,7 @@ class PersonsFragment : Fragment(), OnPersonActionsListener {
     }
 
     private fun onViewsClicks() {
+        binding.personsFragmentSearch.setOnQueryTextListener(this)
         binding.personsFragmentAddBTN.setOnClickListener {
             binding.fabsGroup.close(true)
             showAddPersonDialog(false)
@@ -288,6 +290,20 @@ class PersonsFragment : Fragment(), OnPersonActionsListener {
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val b: ByteArray = baos.toByteArray()
         return Base64.encodeToString(b, Base64.DEFAULT)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (::personsAdapter.isInitialized) {
+            personsAdapter.filter.filter(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (::personsAdapter.isInitialized) {
+            personsAdapter.filter.filter(newText)
+        }
+        return true
     }
 
 

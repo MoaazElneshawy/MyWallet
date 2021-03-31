@@ -1,9 +1,12 @@
 package com.moaazelneshawy.mywallet.presentation.ui.persons
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.moaazelneshawy.mywallet.database.model.Person
 import com.moaazelneshawy.mywallet.databinding.ItemPersonBinding
@@ -17,7 +20,9 @@ on 30,March,2021
 class PersonsAdapter(
     private val persons: List<Person>,
     private val listener: OnPersonActionsListener
-) : RecyclerView.Adapter<PersonsAdapter.PersonViewHolder>() {
+) : RecyclerView.Adapter<PersonsAdapter.PersonViewHolder>(), Filterable {
+
+    private var filteredPersons = persons
 
     inner class PersonViewHolder(private val itemPersonBinding: ItemPersonBinding) :
         RecyclerView.ViewHolder(itemPersonBinding.root) {
@@ -46,10 +51,42 @@ class PersonsAdapter(
     }
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        holder.bind(persons[position])
+        holder.bind(filteredPersons[position])
     }
 
-    override fun getItemCount() = persons.size
+    override fun getItemCount() = filteredPersons.size
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            @SuppressLint("DefaultLocale")
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString = constraint.toString()
+
+                if (charString.isEmpty()) {
+                    filteredPersons = persons
+                } else {
+                    val filteredList = ArrayList<Person>()
+                    for (p in persons) {
+                        if (p.name.toLowerCase().contains(charString.toLowerCase())
+                            || p.mobileNumber.contains(charString)
+                        ) {
+                            filteredList.add(p)
+                        }
+                    }
+                    filteredPersons = filteredList
+                }
+
+                val results = FilterResults()
+                results.values = filteredPersons
+
+                return results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredPersons = results?.values as List<Person>
+                notifyDataSetChanged()
+            }
+        }
+    }
 }
 
 interface OnPersonActionsListener {

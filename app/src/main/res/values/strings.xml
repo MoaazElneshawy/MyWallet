@@ -37,4 +37,5 @@
     <string name="failed_update_transaction">فشل في تعديل المعاملة</string>
     <string name="cash_on_date">%1$s في %2$s</string>
     <string name="total">الإجمالي = %1$3d</string>
+    <string name="search_hint">ادخل رقم الجوال او الاسم</string>
 </resources>

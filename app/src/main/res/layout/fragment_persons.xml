@@ -7,10 +7,21 @@
     android:layoutDirection="rtl"
     tools:context=".presentation.ui.persons.PersonsFragment">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/personsFragmentSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="@string/search_hint" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/personsFragmentRV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/personsFragmentSearch" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/noDataTV"
