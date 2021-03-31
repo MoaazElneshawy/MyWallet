@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.deepakkumardk.kontactpickerlib.KontactPicker
 import com.deepakkumardk.kontactpickerlib.model.ImageMode
@@ -72,6 +73,9 @@ class CreditorFragment : Fragment(), OnMoneyActionsListener {
     private val currentYear = calendar.get(Calendar.YEAR)
     private val currentMonth = calendar.get(Calendar.MONTH)
     private val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+    private var total = MutableLiveData(0)
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -154,6 +158,11 @@ class CreditorFragment : Fragment(), OnMoneyActionsListener {
     }
 
     private fun observeViewModel() {
+        total.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.totalTV.text = getString(R.string.total, it)
+            }
+        }
         viewModel.creditors?.observe(viewLifecycleOwner) {
             it?.let {
                 setTransactions(it)
@@ -172,8 +181,16 @@ class CreditorFragment : Fragment(), OnMoneyActionsListener {
     private fun setTransactions(list: List<Transaction>) {
         if (list.isEmpty()) {
             binding.noDataTV.visible()
+            binding.totalTV.gone()
             binding.creditorFragmentRV.gone()
         } else {
+            total.value = 0
+            list.forEach {
+                if (it.creditorOrDebtor == TRANSACTION_STATE.CREDITOR.name) {
+                    total.value = total.value!! + it.cash
+                }
+            }
+            binding.totalTV.visible()
             binding.noDataTV.gone()
             creditorAdapter = MoneyAdapter(list, this)
             binding.creditorFragmentRV.apply {

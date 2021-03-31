@@ -7,10 +7,24 @@
     android:layoutDirection="rtl"
     tools:context=".presentation.ui.creditor.CreditorFragment">
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/totalTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/creditorFragmentRV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/totalTV" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/noDataTV"
