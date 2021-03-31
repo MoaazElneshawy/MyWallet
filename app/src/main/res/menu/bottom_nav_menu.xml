@@ -11,10 +11,10 @@
         android:icon="@drawable/ic_debtor"
         android:title="@string/title_debtor" />
 
-    <item
-        android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_search"
-        android:title="@string/title_search" />
+    <!--    <item-->
+    <!--        android:id="@+id/searchFragment"-->
+    <!--        android:icon="@drawable/ic_search"-->
+    <!--        android:title="@string/title_search" />-->
     <item
         android:id="@+id/personsFragment"
         android:icon="@drawable/ic_persons"
