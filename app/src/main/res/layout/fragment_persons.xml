@@ -24,17 +24,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/personsFragmentAddBTN"
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fabsGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_15sdp"
-        android:foregroundTint="@color/white"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/middle"
+        android:layout_margin="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white"
-        tools:ignore="ContentDescription" />
+        app:menu_colorNormal="@color/middle"
+        app:menu_colorPressed="@color/middle"
+        app:menu_colorRipple="@color/light"
+        app:menu_icon="@drawable/ic_add"
+        app:menu_labels_position="right"
+        app:menu_labels_singleLine="true"
+        app:menu_showShadow="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/personsFragmentAddBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_person_add"
+            app:fab_colorNormal="@color/middle"
+            app:fab_colorPressed="@color/middle"
+            app:fab_colorRipple="@color/light"
+            app:fab_label="@string/add_person"
+            app:fab_shadowColor="@color/light"
+            app:fab_showShadow="true" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addFromContactBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_person_add"
+            app:fab_colorNormal="@color/middle"
+            app:fab_colorPressed="@color/middle"
+            app:fab_colorRipple="@color/light"
+            app:fab_label="@string/add_from_contact"
+            app:fab_shadowColor="@color/light"
+            app:fab_showShadow="true" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,7 +43,7 @@
             android:id="@+id/addTransactionBTN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_add_transaction"
             app:fab_colorNormal="@color/middle"
             app:fab_colorPressed="@color/middle"
             app:fab_colorRipple="@color/light"
@@ -55,13 +55,26 @@
             android:id="@+id/addPersonBTN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_person_add"
             app:fab_colorNormal="@color/middle"
             app:fab_colorPressed="@color/middle"
             app:fab_colorRipple="@color/light"
             app:fab_label="@string/add_person"
             app:fab_shadowColor="@color/light"
             app:fab_showShadow="true" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addFromContactBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_person_add"
+            app:fab_colorNormal="@color/middle"
+            app:fab_colorPressed="@color/middle"
+            app:fab_colorRipple="@color/light"
+            app:fab_label="@string/add_from_contact"
+            app:fab_shadowColor="@color/light"
+            app:fab_showShadow="true" />
+
     </com.github.clans.fab.FloatingActionMenu>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

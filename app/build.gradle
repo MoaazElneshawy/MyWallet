@@ -78,4 +78,8 @@ dependencies {
     // fabs menu
     implementation 'com.github.clans:fab:1.6.4'
 
+    // contacts picker
+    implementation 'com.github.deepakkumardk:KontactPicker:1.4.0'
+
+
 }

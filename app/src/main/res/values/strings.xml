@@ -23,4 +23,6 @@
     <string name="call">اتصال</string>
     <string name="cancel">إلغاء</string>
     <string name="edit">تعديل البيانات</string>
+    <string name="add_from_contact">إضافة من جهات الإتصال</string>
+    <string name="failed_add_from_contact">فشل في إضافة من جهات الإتصال</string>
 </resources>

@@ -2,7 +2,9 @@ package com.moaazelneshawy.mywallet.presentation.ui.creditor
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -18,9 +20,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDialog
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.deepakkumardk.kontactpickerlib.KontactPicker
+import com.deepakkumardk.kontactpickerlib.model.ImageMode
+import com.deepakkumardk.kontactpickerlib.model.KontactPickerItem
+import com.deepakkumardk.kontactpickerlib.model.SelectionMode
+import com.deepakkumardk.kontactpickerlib.model.SelectionTickView
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.moaazelneshawy.mywallet.R
@@ -90,7 +98,58 @@ class CreditorFragment : Fragment(), OnMoneyActionsListener {
         }
         binding.addPersonBTN.setOnClickListener {
             binding.fabsGroup.close(true)
-            showAddPersonDialog()
+            showAddPersonDialog(false)
+        }
+        binding.addFromContactBTN.setOnClickListener {
+            binding.fabsGroup.close(true)
+            TedPermission.with(requireContext())
+                .setPermissionListener(object : PermissionListener {
+                    override fun onPermissionGranted() {
+                        selectFromContact()
+                    }
+
+                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+
+                    }
+                })
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(
+                    Manifest.permission.READ_CONTACTS
+                )
+                .check()
+        }
+    }
+
+    private fun selectFromContact() {
+        val item = KontactPickerItem().apply {
+            debugMode = true
+            includePhotoUri =
+                true          //Default is false, If you want to include Uri in the result list
+            imageMode = ImageMode.TextMode                      //Default is None
+            selectionTickView = SelectionTickView.LargeView     //Default is SmallView
+            selectionMode = SelectionMode.Single                //Default is SelectionMode.Multiple
+            textBgColor =
+                ContextCompat.getColor(requireContext(), R.color.dark)  //Default is Random Color
+        }
+        KontactPicker().startPickerForResult(this, item, 3000)  //RequestCode
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == 3000) {
+            val list = KontactPicker.getSelectedKontacts(data)  //ArrayList<MyContacts>
+            if (list.isNullOrEmpty()) {
+                binding.root.snackbar(getString(R.string.failed_add_from_contact))
+            } else {
+                list[0].contactName?.let {
+                    list[0].contactNumber?.let { it1 ->
+                        showAddPersonDialog(
+                            true, it,
+                            it1
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -291,7 +350,7 @@ class CreditorFragment : Fragment(), OnMoneyActionsListener {
                 viewModel.deleteFromWallet(transaction)
                 creditorAdapter.notifyDataSetChanged()
             }
-            negativeButton(getString(R.string.cancel)){it.dismiss()}
+            negativeButton(getString(R.string.cancel)) { it.dismiss() }
         }.show()
     }
 
@@ -300,7 +359,11 @@ class CreditorFragment : Fragment(), OnMoneyActionsListener {
         showCashDialog(true)
     }
 
-    private fun showAddPersonDialog() {
+    private fun showAddPersonDialog(
+        isFromContact: Boolean,
+        name: String = "",
+        mobile: String = ""
+    ) {
         if (::addPersonDialog.isInitialized.not()) {
             addPersonBinding = DialogAddPersonBinding.inflate(layoutInflater)
             addPersonDialog = AppCompatDialog(requireContext())
@@ -318,15 +381,17 @@ class CreditorFragment : Fragment(), OnMoneyActionsListener {
                 }
             }
         }
-        addPersonBinding.imageNameTV.text = getString(R.string.image)
-        addPersonBinding.nameET.clearText()
-        addPersonBinding.mobileET.clearText()
+        if (isFromContact) {
+            addPersonBinding.nameET.setText(name)
+            addPersonBinding.mobileET.setText(mobile)
+        } else {
+            addPersonBinding.imageNameTV.text = getString(R.string.image)
+            addPersonBinding.nameET.clearText()
+            addPersonBinding.mobileET.clearText()
+        }
         image = ""
-
         onEditChangesAtPersonDialog()
         onDialogClicksAtPersonDialog()
-        addPersonBinding.mobileET.clearText()
-        addPersonBinding.nameET.clearText()
         addPersonDialog.show()
     }
 

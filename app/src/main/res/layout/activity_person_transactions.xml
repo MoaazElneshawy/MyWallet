@@ -26,7 +26,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backIV" />
 
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nameTV"
         android:layout_width="0dp"
@@ -119,7 +118,7 @@
             android:id="@+id/addTransactionBTN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_add_transaction"
             app:fab_colorNormal="@color/middle"
             app:fab_colorPressed="@color/middle"
             app:fab_colorRipple="@color/light"

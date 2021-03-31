@@ -36,7 +36,9 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         GlobalScope.async { repo.deletePerson(person) }
     }
 
-    fun addPersonAsync(person: Person) = GlobalScope.async { repo.addPerson(person) }
+    fun addPersonAsync(person: Person) {
+        GlobalScope.async { repo.addPerson(person) }
+    }
 
     fun updatePerson(person: Person) {
         GlobalScope.async {
