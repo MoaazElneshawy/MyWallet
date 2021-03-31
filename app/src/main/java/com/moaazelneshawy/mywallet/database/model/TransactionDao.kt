@@ -15,13 +15,13 @@ interface TransactionDao {
     fun getAllCreditorDebtorMoney(creditorOrDebtor: String): LiveData<List<Transaction>>
 
     @Insert
-    fun addMoney(transaction: Transaction)
+    fun addMoney(transaction: Transaction): Long
 
     @Update
-    fun updateMoney(transaction: Transaction)
+    fun updateMoney(transaction: Transaction): Int
 
     @Delete
-    fun deleteMoney(transaction: Transaction)
+    fun deleteMoney(transaction: Transaction): Int
 
     @Query("SELECT * FROM transactions where mobile_number=:mobileNumber")
     fun getPersonMoney(mobileNumber: String): LiveData<List<Transaction>>
@@ -30,6 +30,6 @@ interface TransactionDao {
     fun deletePersonMoney(mobileNumber: String)
 
     @Update
-    fun updateTransaction(transaction: Transaction)
+    fun updateTransaction(transaction: Transaction): Int
 
 }

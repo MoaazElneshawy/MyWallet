@@ -18,5 +18,5 @@ class Transaction(
     @ColumnInfo(name = "reason") val reason: String,
     @ColumnInfo(name = "creditor_debtor") val creditorOrDebtor: String,
     @ColumnInfo(name = "date") val date: String,
-    @ColumnInfo(name = "cash") val cash: Double
+    @ColumnInfo(name = "cash") val cash: Int
 )

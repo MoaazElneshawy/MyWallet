@@ -7,8 +7,7 @@ import com.moaazelneshawy.mywallet.database.data.DatabaseRepo
 import com.moaazelneshawy.mywallet.database.model.Person
 import com.moaazelneshawy.mywallet.database.model.TRANSACTION_STATE
 import com.moaazelneshawy.mywallet.database.model.Transaction
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 /**
 Created by Moaaz Elneshawy
@@ -20,31 +19,25 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     private val repo = DatabaseRepo(application)
 
     // creditors
-    internal fun addToWallet(transaction: Transaction) {
-        GlobalScope.async { repo.addMoneyToMyWallet(transaction) }
-    }
+    fun addToWallet(transaction: Transaction) =
+        runBlocking { repo.addMoneyToMyWallet(transaction) }
 
-    internal fun deleteFromWallet(transaction: Transaction) {
-        GlobalScope.async { repo.deleteMoneyFromWallet(transaction) }
-    }
 
-    internal fun updateTransactionWallet(transaction: Transaction) {
-        GlobalScope.async { repo.updateTransaction(transaction) }
-    }
+    fun deleteFromWallet(transaction: Transaction) =
+        runBlocking { repo.deleteMoneyFromWallet(transaction) }
 
-    fun deletePerson(person: Person) {
-        GlobalScope.async { repo.deletePerson(person) }
-    }
+    fun updateTransactionWallet(transaction: Transaction) =
+        runBlocking { repo.updateTransaction(transaction) }
 
-    fun addPersonAsync(person: Person) {
-        GlobalScope.async { repo.addPerson(person) }
-    }
 
-    fun updatePerson(person: Person) {
-        GlobalScope.async {
-            repo.updatePerson(person)
-        }
-    }
+    fun deletePerson(person: Person) =
+        runBlocking { repo.deletePerson(person) }
+
+    fun addPerson(person: Person) =
+        runBlocking { repo.addPerson(person) }
+
+    fun updatePerson(person: Person) =
+        runBlocking { repo.updatePerson(person) }
 
     val creditors: LiveData<List<Transaction>>?
         get() {

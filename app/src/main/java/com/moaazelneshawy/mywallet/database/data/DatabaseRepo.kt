@@ -34,21 +34,16 @@ class DatabaseRepo(application: Application) {
     }
 
     // add new
-    suspend fun addMoneyToMyWallet(transaction: Transaction) {
-        coroutineScope {
-            withContext(Dispatchers.IO) {
-                transactionDao?.addMoney(transaction)
-            }
-        }
-    }
+    suspend fun addMoneyToMyWallet(transaction: Transaction) =
+        CoroutineScope(Dispatchers.IO).async {
+            return@async transactionDao?.addMoney(transaction)!!
+        }.await()
 
-    suspend fun deleteMoneyFromWallet(transaction: Transaction) {
-        coroutineScope {
-            withContext(Dispatchers.IO) {
-                transactionDao?.deleteMoney(transaction)
-            }
-        }
-    }
+
+    suspend fun deleteMoneyFromWallet(transaction: Transaction) =
+        CoroutineScope(Dispatchers.IO).async {
+            return@async transactionDao?.deleteMoney(transaction)!!
+        }.await()
 
     fun getPersonMoney(mobileNumber: String): LiveData<List<Transaction>>? {
         return transactionDao?.getPersonMoney(mobileNumber)
@@ -62,34 +57,23 @@ class DatabaseRepo(application: Application) {
         return personDao?.getPersonDetails(mobileNumber)
     }
 
-    suspend fun deletePerson(person: Person) {
-        coroutineScope {
-            withContext(Dispatchers.IO) {
-                transactionDao?.deletePersonMoney(person.mobileNumber)
-                personDao?.deletePerson(person)
-            }
-        }
-    }
+    suspend fun deletePerson(person: Person) = CoroutineScope(Dispatchers.IO).async {
+        transactionDao?.deletePersonMoney(person.mobileNumber)
+        return@async personDao?.deletePerson(person)!!
+    }.await()
 
-    suspend fun addPerson(person: Person): Long =
-       CoroutineScope(Dispatchers.IO) .async{
+    suspend fun addPerson(person: Person) =
+        CoroutineScope(Dispatchers.IO).async {
             return@async personDao?.addPerson(person)!!
         }.await()
 
-    suspend fun updatePerson(person: Person) {
-        coroutineScope {
-            withContext(Dispatchers.IO) {
-                personDao?.updatePerson(person)
-            }
-        }
-    }
+    suspend fun updatePerson(person: Person) = CoroutineScope(Dispatchers.IO).async {
+        return@async personDao?.updatePerson(person)!!
+    }.await()
 
-    suspend fun updateTransaction(transaction: Transaction) {
-        coroutineScope {
-            withContext(Dispatchers.IO) {
-                transactionDao?.updateTransaction(transaction)
-            }
-        }
-    }
+
+    suspend fun updateTransaction(transaction: Transaction) = CoroutineScope(Dispatchers.IO).async {
+        return@async transactionDao?.updateTransaction(transaction)!!
+    }.await()
 
 }

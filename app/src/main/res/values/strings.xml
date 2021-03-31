@@ -25,4 +25,16 @@
     <string name="edit">تعديل البيانات</string>
     <string name="add_from_contact">إضافة من جهات الإتصال</string>
     <string name="failed_add_from_contact">فشل في إضافة من جهات الإتصال</string>
+    <string name="failed_add_person">فشل في إضافة هذا الشخص</string>
+    <string name="failed_person_exists">هذا الشخص موجود بالفعل</string>
+    <string name="failed_add_transaction">فشل في إضافة المعاملة</string>
+    <string name="added_successfully">تمت الأضافة بنجاح</string>
+    <string name="deleted_successfully">تم المسح بنجاح</string>
+    <string name="updated_successfully">تم التعديل بنجاح</string>
+    <string name="failed_deleted_person">فشل في مسح الشخص</string>
+    <string name="failed_deleted_transaction">فشل في مسح المعاملة</string>
+    <string name="failed_failed_person">فشل في تعديل بيانات الشخص</string>
+    <string name="failed_update_transaction">فشل في تعديل المعاملة</string>
+    <string name="cash_on_date">%1$s في %2$s</string>
+    <string name="total">الإجمالي = %1$3d</string>
 </resources>

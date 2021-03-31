@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.database.sqlite.SQLiteConstraintException
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -30,6 +31,7 @@ import com.deepakkumardk.kontactpickerlib.model.SelectionMode
 import com.deepakkumardk.kontactpickerlib.model.SelectionTickView
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import com.moaazelneshawy.mywallet.BuildConfig
 import com.moaazelneshawy.mywallet.R
 import com.moaazelneshawy.mywallet.database.model.Person
 import com.moaazelneshawy.mywallet.database.model.TRANSACTION_STATE
@@ -120,9 +122,8 @@ class DebtorFragment : Fragment(), OnMoneyActionsListener {
 
     private fun selectFromContact() {
         val item = KontactPickerItem().apply {
-            debugMode = true
-            includePhotoUri =
-                true          //Default is false, If you want to include Uri in the result list
+            debugMode = BuildConfig.DEBUG.not()
+            themeResId = R.style.customTheme
             imageMode = ImageMode.TextMode                      //Default is None
             selectionTickView = SelectionTickView.LargeView     //Default is SmallView
             selectionMode = SelectionMode.Single                //Default is SelectionMode.Multiple
@@ -293,24 +294,28 @@ class DebtorFragment : Fragment(), OnMoneyActionsListener {
                         id = it.id,
                         mobileNumber = it.mobileNumber,
                         name = it.name,
-                        cash = cash.toDouble(),
+                        cash = cash.toInt(),
                         reason = reason,
                         creditorOrDebtor = TRANSACTION_STATE.DEBTOR.name,
                         date = date
                     )
                 )
+                binding.root.snackbar(getString(R.string.updated_successfully))
             }
-            debtorAdapter.notifyDataSetChanged()
-        } else viewModel.addToWallet(
-            Transaction(
-                mobileNumber = selectedPerson!!.mobileNumber,
-                name = selectedPerson!!.name,
-                cash = cash.toDouble(),
-                reason = reason,
-                creditorOrDebtor = TRANSACTION_STATE.DEBTOR.name,
-                date = date
+        } else {
+            viewModel.addToWallet(
+                Transaction(
+                    mobileNumber = selectedPerson!!.mobileNumber,
+                    name = selectedPerson!!.name,
+                    cash = cash.toInt(),
+                    reason = reason,
+                    creditorOrDebtor = TRANSACTION_STATE.DEBTOR.name,
+                    date = date
+                )
             )
-        )
+            binding.root.snackbar(getString(R.string.added_successfully))
+        }
+        if (::debtorAdapter.isInitialized) debtorAdapter.notifyDataSetChanged()
         addTransactionDialog.dismiss()
     }
 
@@ -430,7 +435,17 @@ class DebtorFragment : Fragment(), OnMoneyActionsListener {
             addPersonBinding.mobileInput.setErrorMessage(getString(R.string.error_empty_field))
             return
         }
-        viewModel.addPersonAsync(Person(mobile, name, image))
+        try {
+            val defLong = viewModel.addPerson(Person(mobile, name, image))
+            if (defLong > 0) {
+                binding.root.snackbar(getString(R.string.added_successfully))
+            }
+        } catch (e: SQLiteConstraintException) {
+            binding.root.snackbar(getString(R.string.failed_person_exists))
+        } catch (e: Exception) {
+            binding.root.snackbar(getString(R.string.failed_add_person))
+        }
+
         addPersonDialog.dismiss()
     }
 }

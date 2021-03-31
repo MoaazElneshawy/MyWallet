@@ -37,7 +37,7 @@ class SearchFragment : Fragment(), OnMoneyActionsListener {
     private lateinit var addTransactionBinding: DialogAddNewTransactionBinding
     private var editedTransaction: Transaction? = null
 
-    private var total = MutableLiveData(0.0)
+    private var total = MutableLiveData(0)
 
     private var image = ""
     private var date = ""
@@ -66,7 +66,7 @@ class SearchFragment : Fragment(), OnMoneyActionsListener {
     private fun observeViewModel() {
         total.observe(viewLifecycleOwner) {
             it?.let {
-                binding.totalTV.text = "الإجمالي  = $it"
+                binding.totalTV.text = getString(R.string.total, it)
                 if (it > 0) binding.totalTV.setTextColor(requireActivity().getColor(android.R.color.holo_green_dark))
                 else binding.totalTV.setTextColor(requireActivity().getColor(android.R.color.holo_red_dark))
             }
@@ -103,7 +103,7 @@ class SearchFragment : Fragment(), OnMoneyActionsListener {
                     binding.totalTV.gone()
                     binding.root.snackbar("$mobile غير موجود ")
                 } else {
-                    total.value = 0.0
+                    total.value = 0
                     list.forEach {
                         if (it.creditorOrDebtor == TRANSACTION_STATE.CREDITOR.name) {
                             total.value = total.value!! + it.cash
@@ -219,14 +219,15 @@ class SearchFragment : Fragment(), OnMoneyActionsListener {
                     id = it.id,
                     mobileNumber = it.mobileNumber,
                     name = it.name,
-                    cash = cash.toDouble(),
+                    cash = cash.toInt(),
                     reason = reason,
                     creditorOrDebtor = it.creditorOrDebtor,
                     date = date
                 )
             )
+            binding.root.snackbar(getString(R.string.updated_successfully))
         }
-        moneyAdapter.notifyDataSetChanged()
+        if (::moneyAdapter.isInitialized) moneyAdapter.notifyDataSetChanged()
         addTransactionDialog.dismiss()
     }
 

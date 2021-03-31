@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.moaazelneshawy.mywallet.R
 import com.moaazelneshawy.mywallet.database.model.TRANSACTION_STATE
 import com.moaazelneshawy.mywallet.database.model.Transaction
 import com.moaazelneshawy.mywallet.databinding.ItemTransactionsBinding
@@ -42,7 +43,9 @@ class TransactionsAdapter(
                 )
             }
             itemBinding.reasonTV.text = transaction.reason
-            itemBinding.cashOnDateTV.text = "${transaction.cash} - ${transaction.date}"
+            itemBinding.cashOnDateTV.text = itemBinding.root.context.getString(
+                R.string.cash_on_date, transaction.cash.toString(), transaction.date
+            )
             itemBinding.deleteIV.setOnClickListener { listener.onDelete(transaction) }
             itemBinding.editIV.setOnClickListener { listener.onEdit(transaction) }
         }

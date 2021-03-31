@@ -12,17 +12,17 @@ on 30,March,2021
 interface PersonDao {
 
     @Update
-    fun updatePerson(person: Person)
+    fun updatePerson(person: Person): Int
 
     @Insert
     fun addPerson(person: Person): Long
 
     @Delete
-    fun deletePerson(person: Person)
+    fun deletePerson(person: Person): Int
 
     @Query("SELECT * FROM persons")
     fun getAllPersons(): LiveData<List<Person>>
 
     @Query("SELECT * FROM persons where mobile_number=:mobileNumber")
-    fun getPersonDetails(mobileNumber: String) : LiveData<Person>
+    fun getPersonDetails(mobileNumber: String): LiveData<Person>
 }

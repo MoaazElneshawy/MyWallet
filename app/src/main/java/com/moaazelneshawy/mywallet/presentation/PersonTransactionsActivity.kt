@@ -39,7 +39,7 @@ class PersonTransactionsActivity : AppCompatActivity(), OnTransactionDeleteListe
     private lateinit var binding: ActivityPersonTransactionsBinding
     private lateinit var viewModel: MyViewModel
     private lateinit var transactionsAdapter: TransactionsAdapter
-    private var total = MutableLiveData(0.0)
+    private var total = MutableLiveData(0)
     private var date = ""
 
     private lateinit var addPersonDialog: AppCompatDialog
@@ -72,8 +72,8 @@ class PersonTransactionsActivity : AppCompatActivity(), OnTransactionDeleteListe
         }
         total.observe(this) {
             it?.let {
-                binding.totalTV.text = "الإجمالي  = $it"
-                if (it > 0.0 || it == 0.0) binding.totalTV.setTextColor(getColor(android.R.color.holo_green_dark))
+                binding.totalTV.text = getString(R.string.total, it)
+                if (it > 0 || it == 0) binding.totalTV.setTextColor(getColor(android.R.color.holo_green_dark))
                 else binding.totalTV.setTextColor(getColor(android.R.color.holo_red_dark))
             }
         }
@@ -98,11 +98,12 @@ class PersonTransactionsActivity : AppCompatActivity(), OnTransactionDeleteListe
         viewModel.getPersonMoney(mobileNumber)?.observe(this) {
             it?.let { list ->
                 if (list.isEmpty()) {
+                    binding.noDataTV.visible()
                     binding.transactionsRV.gone()
                     binding.totalTV.gone()
-                    binding.root.snackbar("لا توجد تعاملات")
                 } else {
-                    total.value = 0.0
+                    binding.noDataTV.gone()
+                    total.value = 0
                     list.forEach {
                         if (it.creditorOrDebtor == TRANSACTION_STATE.CREDITOR.name) {
                             total.value = total.value!! + it.cash
@@ -266,24 +267,28 @@ class PersonTransactionsActivity : AppCompatActivity(), OnTransactionDeleteListe
                         id = it.id,
                         mobileNumber = person!!.mobileNumber,
                         name = person!!.name,
-                        cash = cash.toDouble(),
+                        cash = cash.toInt(),
                         reason = reason,
                         creditorOrDebtor = state.name,
                         date = date
                     )
                 )
             }
-            transactionsAdapter.notifyDataSetChanged()
-        } else viewModel.addToWallet(
-            Transaction(
-                mobileNumber = person!!.mobileNumber,
-                name = person!!.name,
-                cash = cash.toDouble(),
-                reason = reason,
-                creditorOrDebtor = state.name,
-                date = date
+            binding.root.snackbar(getString(R.string.updated_successfully))
+        } else {
+            viewModel.addToWallet(
+                Transaction(
+                    mobileNumber = person!!.mobileNumber,
+                    name = person!!.name,
+                    cash = cash.toInt(),
+                    reason = reason,
+                    creditorOrDebtor = state.name,
+                    date = date
+                )
             )
-        )
+            binding.root.snackbar(getString(R.string.added_successfully))
+        }
+        if (::transactionsAdapter.isInitialized) transactionsAdapter.notifyDataSetChanged()
         addTransactionDialog.dismiss()
     }
 
