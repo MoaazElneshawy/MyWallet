@@ -28,6 +28,7 @@ import com.moaazelneshawy.mywallet.presentation.PersonTransactionsActivity
 import com.moaazelneshawy.mywallet.utils.*
 import gun0912.tedbottompicker.TedBottomPicker
 import org.jetbrains.anko.makeCall
+import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.intentFor
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
@@ -179,7 +180,14 @@ class PersonsFragment : Fragment(), OnPersonActionsListener {
     }
 
     override fun onDeletePerson(person: Person) {
-        viewModel.deletePerson(person)
+        alert {
+            title = getString(R.string.delete_person_title)
+            positiveButton(getString(R.string.delete)) {
+                viewModel.deletePerson(person)
+                personsAdapter.notifyDataSetChanged()
+            }
+            negativeButton(getString(R.string.cancel)) { it.dismiss() }
+        }.show()
     }
 
     override fun onGetPersonTransactions(person: Person) {

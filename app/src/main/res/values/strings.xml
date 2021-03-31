@@ -18,6 +18,9 @@
     <string name="add_person">إضافة شخص جديد</string>
     <string name="add_persons_first">قم بإضافة أشخاص أولًا</string>
     <string name="delete">مسح</string>
+    <string name="delete_person_title">هل تريد مسح هذا الشخص؟</string>
+    <string name="delete_transaction_title">هل تريد مسح المعاملة؟</string>
     <string name="call">اتصال</string>
+    <string name="cancel">إلغاء</string>
     <string name="edit">تعديل البيانات</string>
 </resources>

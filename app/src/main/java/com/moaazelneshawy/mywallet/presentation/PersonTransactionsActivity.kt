@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +28,7 @@ import com.moaazelneshawy.mywallet.databinding.DialogAddNewTransactionBinding
 import com.moaazelneshawy.mywallet.databinding.DialogAddPersonBinding
 import com.moaazelneshawy.mywallet.utils.*
 import gun0912.tedbottompicker.TedBottomPicker
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.makeCall
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
@@ -146,8 +146,14 @@ class PersonTransactionsActivity : AppCompatActivity(), OnTransactionDeleteListe
         }
         binding.deleteBTN.setOnClickListener {
             binding.fabsGroup.close(true)
-            person?.let { it1 -> viewModel.deletePerson(it1) }
-            this.finish()
+            alert {
+                title = getString(R.string.delete_person_title)
+                positiveButton(getString(R.string.delete)) {
+                    person?.let { it1 -> viewModel.deletePerson(it1) }
+                    this@PersonTransactionsActivity.finish()
+                }
+                negativeButton(getString(R.string.cancel)) { it.dismiss() }
+            }.show()
         }
         binding.addTransactionBTN.setOnClickListener {
             binding.fabsGroup.close(true)
@@ -282,8 +288,14 @@ class PersonTransactionsActivity : AppCompatActivity(), OnTransactionDeleteListe
     }
 
     override fun onDelete(transaction: Transaction) {
-        viewModel.deleteFromWallet(transaction)
-        transactionsAdapter.notifyDataSetChanged()
+        alert {
+            title = getString(R.string.delete_transaction_title)
+            positiveButton(getString(R.string.delete)) {
+                viewModel.deleteFromWallet(transaction)
+                transactionsAdapter.notifyDataSetChanged()
+            }
+            negativeButton(getString(R.string.cancel)) { it.dismiss() }
+        }.show()
     }
 
     override fun onEdit(transaction: Transaction) {

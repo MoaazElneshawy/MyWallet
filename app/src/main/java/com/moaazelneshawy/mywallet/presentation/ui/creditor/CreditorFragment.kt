@@ -35,6 +35,7 @@ import com.moaazelneshawy.mywallet.presentation.ui.MoneyAdapter
 import com.moaazelneshawy.mywallet.presentation.ui.OnMoneyActionsListener
 import com.moaazelneshawy.mywallet.utils.*
 import gun0912.tedbottompicker.TedBottomPicker
+import org.jetbrains.anko.support.v4.alert
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.*
@@ -284,8 +285,14 @@ class CreditorFragment : Fragment(), OnMoneyActionsListener {
     }
 
     override fun onDelete(transaction: Transaction) {
-        viewModel.deleteFromWallet(transaction)
-        creditorAdapter.notifyDataSetChanged()
+        alert {
+            title = getString(R.string.delete_transaction_title)
+            positiveButton(getString(R.string.delete)) {
+                viewModel.deleteFromWallet(transaction)
+                creditorAdapter.notifyDataSetChanged()
+            }
+            negativeButton(getString(R.string.cancel)){it.dismiss()}
+        }.show()
     }
 
     override fun onEdit(transaction: Transaction) {

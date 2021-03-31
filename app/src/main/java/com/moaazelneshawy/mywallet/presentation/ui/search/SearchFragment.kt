@@ -24,6 +24,7 @@ import com.moaazelneshawy.mywallet.presentation.MyViewModel
 import com.moaazelneshawy.mywallet.presentation.ui.MoneyAdapter
 import com.moaazelneshawy.mywallet.presentation.ui.OnMoneyActionsListener
 import com.moaazelneshawy.mywallet.utils.*
+import org.jetbrains.anko.support.v4.alert
 import java.util.*
 
 class SearchFragment : Fragment(), OnMoneyActionsListener {
@@ -124,8 +125,14 @@ class SearchFragment : Fragment(), OnMoneyActionsListener {
     }
 
     override fun onDelete(transaction: Transaction) {
-        viewModel.deleteFromWallet(transaction)
-        moneyAdapter.notifyDataSetChanged()
+        alert {
+            title = getString(R.string.delete_transaction_title)
+            positiveButton(getString(R.string.delete)) {
+                viewModel.deleteFromWallet(transaction)
+                moneyAdapter.notifyDataSetChanged()
+            }
+            negativeButton(getString(R.string.cancel)) { it.dismiss() }
+        }.show()
     }
 
     override fun onEdit(transaction: Transaction) {

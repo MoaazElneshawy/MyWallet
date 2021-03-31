@@ -34,6 +34,7 @@ import com.moaazelneshawy.mywallet.presentation.ui.MoneyAdapter
 import com.moaazelneshawy.mywallet.presentation.ui.OnMoneyActionsListener
 import com.moaazelneshawy.mywallet.utils.*
 import gun0912.tedbottompicker.TedBottomPicker
+import org.jetbrains.anko.support.v4.alert
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.*
@@ -45,7 +46,7 @@ class DebtorFragment : Fragment(), OnMoneyActionsListener {
 
     private lateinit var addTransactionDialog: AppCompatDialog
     private lateinit var addTransactionBinding: DialogAddNewTransactionBinding
-    private lateinit var creditorAdapter: MoneyAdapter
+    private lateinit var debtorAdapter: MoneyAdapter
 
     private lateinit var addPersonDialog: AppCompatDialog
     private lateinit var addPersonBinding: DialogAddPersonBinding
@@ -113,11 +114,11 @@ class DebtorFragment : Fragment(), OnMoneyActionsListener {
             binding.debtorFragmentRV.gone()
         } else {
             binding.noDataTV.gone()
-            creditorAdapter = MoneyAdapter(list, this)
+            debtorAdapter = MoneyAdapter(list, this)
             binding.debtorFragmentRV.apply {
                 linearLayoutManager()
                 visible()
-                adapter = creditorAdapter
+                adapter = debtorAdapter
             }
         }
     }
@@ -240,7 +241,7 @@ class DebtorFragment : Fragment(), OnMoneyActionsListener {
                     )
                 )
             }
-            creditorAdapter.notifyDataSetChanged()
+            debtorAdapter.notifyDataSetChanged()
         } else viewModel.addToWallet(
             Transaction(
                 mobileNumber = selectedPerson!!.mobileNumber,
@@ -280,8 +281,14 @@ class DebtorFragment : Fragment(), OnMoneyActionsListener {
     }
 
     override fun onDelete(transaction: Transaction) {
-        viewModel.deleteFromWallet(transaction)
-        creditorAdapter.notifyDataSetChanged()
+        alert {
+            title = getString(R.string.delete_transaction_title)
+            positiveButton(getString(R.string.delete)) {
+                viewModel.deleteFromWallet(transaction)
+                debtorAdapter.notifyDataSetChanged()
+            }
+            negativeButton(getString(R.string.cancel)) { it.dismiss() }
+        }.show()
     }
 
     override fun onEdit(transaction: Transaction) {
