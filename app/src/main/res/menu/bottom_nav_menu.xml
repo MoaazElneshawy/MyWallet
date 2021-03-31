@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/creditorFragment"
+        android:icon="@drawable/ic_creditor"
+        android:title="@string/title_creditor" />
+
+    <item
+        android:id="@+id/debtorFragment"
+        android:icon="@drawable/ic_debtor"
+        android:title="@string/title_debtor" />
+
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search"
+        android:title="@string/title_search" />
+    <item
+        android:id="@+id/personsFragment"
+        android:icon="@drawable/ic_persons"
+        android:title="@string/title_all" />
+
+</menu>

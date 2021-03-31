@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:padding="@dimen/_5sdp"
+    tools:context=".presentation.PersonTransactionsActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/backIV"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:padding="@dimen/_5sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageIV"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backIV" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/nameTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintBottom_toBottomOf="@id/imageIV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageIV"
+        app:layout_constraintTop_toTopOf="@id/imageIV"
+        tools:text="@string/app_name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/totalTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:textAlignment="center"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameTV"
+        tools:text="@string/app_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transactionsRV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/totalTV" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fabsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu_colorNormal="@color/middle"
+        app:menu_colorPressed="@color/middle"
+        app:menu_colorRipple="@color/light"
+        app:menu_icon="@drawable/ic_dehaze"
+        app:menu_labels_position="right"
+        app:menu_labels_singleLine="true"
+        app:menu_showShadow="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/deleteBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_white_delete"
+            app:fab_colorNormal="@android:color/holo_red_dark"
+            app:fab_colorPressed="@android:color/holo_red_light"
+            app:fab_colorRipple="@android:color/holo_red_light"
+            app:fab_label="@string/delete"
+            app:fab_shadowColor="@android:color/transparent"
+            app:fab_showShadow="true" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/callBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_white_call"
+            android:tint="@color/white"
+            app:fab_colorNormal="@color/middle"
+            app:fab_colorPressed="@color/middle"
+            app:fab_colorRipple="@color/light"
+            app:fab_label="@string/call"
+            app:fab_shadowColor="@color/light"
+            app:fab_showShadow="true" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/editBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            android:tint="@color/white"
+            app:fab_colorNormal="@color/middle"
+            app:fab_colorPressed="@color/middle"
+            app:fab_colorRipple="@color/light"
+            app:fab_label="@string/edit"
+            app:fab_shadowColor="@color/light"
+            app:fab_showShadow="true" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addTransactionBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            app:fab_colorNormal="@color/middle"
+            app:fab_colorPressed="@color/middle"
+            app:fab_colorRipple="@color/light"
+            app:fab_label="@string/add_transaction"
+            app:fab_shadowColor="@color/light"
+            app:fab_showShadow="true" />
+    </com.github.clans.fab.FloatingActionMenu>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

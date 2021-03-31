@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">My Wallet</string>
+    <string name="title_creditor">الدائن</string>
+    <string name="title_debtor">المدين</string>
+    <string name="title_search">بحث</string>
+    <string name="title_all">الكل</string>
+    <string name="mobile_number">رقم الجوال *</string>
+    <string name="cash">المبلغ *</string>
+    <string name="name">الاسم *</string>
+    <string name="image">صورة الشخص (اختياري)</string>
+    <string name="error_empty_field">هذا الجزء مطلوب</string>
+    <string name="date">التاريخ *</string>
+    <string name="reason">السبب *</string>
+    <string name="image_selected">تم اختيار الصورة</string>
+    <string name="no_transactions_added">لا توجد تعاملات !</string>
+    <string name="no_persons_added">لا يوجد أشخاص !</string>
+    <string name="add_transaction">إضافة معاملة جديدة</string>
+    <string name="add_person">إضافة شخص جديد</string>
+    <string name="add_persons_first">قم بإضافة أشخاص أولًا</string>
+    <string name="delete">مسح</string>
+    <string name="call">اتصال</string>
+    <string name="edit">تعديل البيانات</string>
+</resources>
