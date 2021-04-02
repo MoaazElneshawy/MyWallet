@@ -10,10 +10,15 @@
         android:id="@+id/debtorFragment"
         android:icon="@drawable/ic_debtor"
         android:title="@string/title_debtor" />
-    
+
     <item
         android:id="@+id/personsFragment"
         android:icon="@drawable/ic_persons"
         android:title="@string/title_all" />
+
+    <item
+        android:id="@+id/balanceFragment"
+        android:icon="@drawable/ic_account_balance_wallet"
+        android:title="@string/title_balance" />
 
 </menu>

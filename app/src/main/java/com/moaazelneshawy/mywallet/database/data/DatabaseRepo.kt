@@ -33,6 +33,10 @@ class DatabaseRepo(application: Application) {
         return transactionDao?.getAllCreditorDebtorMoney(creditorOrDebtor)
     }
 
+    fun getAllTransactions(): LiveData<List<Transaction>>? {
+        return transactionDao?.getAllTransactions()
+    }
+
     // add new
     suspend fun addMoneyToMyWallet(transaction: Transaction) =
         CoroutineScope(Dispatchers.IO).async {

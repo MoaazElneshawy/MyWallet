@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    tools:context=".presentation.ui.balance.BalanceFragment">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_weight="1"
+                android:background="@drawable/bg_table_row"
+                android:gravity="center"
+                android:text="@string/owned"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/ownedTV"
+                android:layout_weight="1"
+                android:background="@drawable/bg_table_row"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="@dimen/_16ssp"
+                tools:text="@string/owned" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_weight="1"
+                android:background="@drawable/bg_table_row"
+                android:gravity="center"
+                android:text="@string/debt"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/debtTV"
+                android:layout_weight="1"
+                android:background="@drawable/bg_table_row"
+                android:gravity="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/_16ssp"
+                tools:text="@string/owned" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_weight="1"
+                android:background="@drawable/bg_table_row"
+                android:gravity="center"
+                android:text="@string/title_balance"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/balanceTV"
+                android:layout_weight="1"
+                android:background="@drawable/bg_table_row"
+                android:gravity="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/_16ssp"
+                tools:text="@string/owned" />
+
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

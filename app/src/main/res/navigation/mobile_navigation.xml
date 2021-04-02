@@ -22,4 +22,11 @@
         android:name="com.moaazelneshawy.mywallet.presentation.ui.persons.PersonsFragment"
         android:label="@string/title_all"
         tools:layout="@layout/fragment_persons" />
+
+    <fragment
+        android:id="@+id/balanceFragment"
+        android:name="com.moaazelneshawy.mywallet.presentation.ui.balance.BalanceFragment"
+        android:label="@string/title_balance"
+        tools:layout="@layout/fragment_balance" />
+
 </navigation>

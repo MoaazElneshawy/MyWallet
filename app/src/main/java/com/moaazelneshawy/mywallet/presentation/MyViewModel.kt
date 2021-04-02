@@ -44,6 +44,9 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
             return repo.getAllCreditorDebtorMoney(TRANSACTION_STATE.CREDITOR.name)
         }
 
+    val transactoins: LiveData<List<Transaction>>?
+        get() = repo.getAllTransactions()
+
     val debtors: LiveData<List<Transaction>>?
         get() {
             return repo.getAllCreditorDebtorMoney(TRANSACTION_STATE.DEBTOR.name)

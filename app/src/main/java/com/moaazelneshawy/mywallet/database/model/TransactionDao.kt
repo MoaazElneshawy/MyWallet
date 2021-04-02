@@ -14,6 +14,9 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions where creditor_debtor=:creditorOrDebtor")
     fun getAllCreditorDebtorMoney(creditorOrDebtor: String): LiveData<List<Transaction>>
 
+    @Query("SELECT * FROM transactions")
+    fun getAllTransactions(): LiveData<List<Transaction>>
+
     @Insert
     fun addMoney(transaction: Transaction): Long
 

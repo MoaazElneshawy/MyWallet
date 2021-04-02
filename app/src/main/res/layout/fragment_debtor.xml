@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="@dimen/_16ssp"
-        android:textStyle="italic"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
